@@ -1,12 +1,18 @@
 const express = require('express');
-import router from './routes/index';
+const router = require("./routes/index.js");
+const Database = require('./utils/mongodb.js');
 
-const app = expresss();
-const port = 3000;
+
+require('dotenv').config();
+
+const app = express();
+const port = 8000;
 
 app.listen(port, () => {
-	console.log(`app listening on port ${port}`)
-})
+  console.log(`app listening on port ${port}`)
+});
+
+Database.connect();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
