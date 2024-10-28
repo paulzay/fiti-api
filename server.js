@@ -1,7 +1,7 @@
 const express = require('express');
 const router = require("./routes/index.js");
 const Database = require('./utils/mongodb.js');
-
+const cors = require('cors');
 
 require('dotenv').config();
 
@@ -16,6 +16,7 @@ Database.connect();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors())
 app.use('/api/v1/', router);
 
 module.exports = app;
