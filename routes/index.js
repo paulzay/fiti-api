@@ -14,8 +14,8 @@ routes.route('/users/:id').put(UserController.updateUser)
 routes.route('/users/:id').delete(UserController.removeUser)
 
 // auth routes
-routes.route('/auth/login').post(AuthController.login)
-routes.route('/auth/register').post(AuthController.register)
+routes.route('/login').post(AuthController.login)
+routes.route('/signup').post(AuthController.register)
 
 // exerciselogs routes
 routes.route('/exerciseLog').get(authenticateToken, ExerciseLogController.get)
@@ -23,5 +23,5 @@ routes.route('/exerciseLog').post(authenticateToken, ExerciseLogController.creat
 routes.route('/exerciseLog/:id').get(authenticateToken, ExerciseLogController.getOne)
 routes.route('/exerciseLog/:id').put(authenticateToken, ExerciseLogController.update)
 routes.route('/exerciseLog/:id').delete(authenticateToken, ExerciseLogController.delete)
-
+routes.route('/user/exerciseLog').get(authenticateToken, ExerciseLogController.getUserLogs)
 module.exports = routes;

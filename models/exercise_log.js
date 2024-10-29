@@ -9,7 +9,7 @@ const exerciseLogSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  exercise: {
+  name: {
     type: String,
     required: true,
   },
@@ -21,7 +21,7 @@ const exerciseLogSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  category: {
+  type: {
     type: String,
     required: true,
   },

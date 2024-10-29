@@ -21,8 +21,9 @@ const comparePassword = async (password, hash) => {
   }
 }
 
-function generateAccessToken(name) {
-  return jwt.sign(name, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+function generateAccessToken(name, email, id) {
+  const payload = { name, email, id };
+  return jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
 }
 
 function authenticateToken(req, res, next) {
@@ -32,7 +33,6 @@ function authenticateToken(req, res, next) {
   if (token == null) return res.sendStatus(401)
 
   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-    console.log(err)
 
     if (err) return res.sendStatus(403)
 
