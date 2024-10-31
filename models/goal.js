@@ -10,6 +10,10 @@ const goalSchema = new mongoose.Schema({
   exerciseType: {
     type: String,
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
 });
 
 const Goal = mongoose.model('Goal', goalSchema);

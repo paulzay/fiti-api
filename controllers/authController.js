@@ -27,7 +27,7 @@ class AuthController {
     }
     const token = generateAccessToken({ name: user.name, email: user.email, id: user._id });
 
-    return res.status(200).json({ message: 'Login successful', token });
+    return res.status(200).json({ data: { token: token, user: { name: user.name, email: user.email } } });
   }
 }
 

@@ -1,9 +1,15 @@
 const Database = require('../utils/mongodb');
 const { hashPassword } = require('../utils/methods');
+const User = require('../models/user');
+
+const db = Database.db.collection('users');
 
 class UserController {
   static async addUser(req, res) {
     const { name, email, password } = req.body;
+
+    // const newUser = new User(name, email, password);
+
     const user = await Database.db.collection('users').findOne({ email });
     if (user) {
       return res.status(409).json({ message: 'User already exists' });
@@ -18,7 +24,7 @@ class UserController {
     if (!users) {
       return res.status(404).json({ message: 'No users found' });
     }
-    return res.status(200).json({ users });
+    return res.status(200).json({ data: users });
   }
 
   static async getUserById(req, res) {
@@ -27,7 +33,7 @@ class UserController {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    return res.status(200).json({ user });
+    return res.status(200).json({ data: user });
   }
 
   static async updateUser(req, res) {
