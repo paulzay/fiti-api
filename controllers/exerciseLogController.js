@@ -1,6 +1,5 @@
 const Database = require('../utils/mongodb');
-//            
-
+const { ObjectId } = require('mongodb');
 const db = Database.db.collection('exercise_log');
 
 class ExerciseLogController {
@@ -26,7 +25,7 @@ class ExerciseLogController {
 
   static async getOne(req, res) {
     const { id } = req.params;
-    const log = await db.findOne({ _id: id });
+    const log = await db.findOne({ _id: new ObjectId(id) });
     if (!log) {
       return res.status(404).json({ message: 'Log not found' });
     }
@@ -37,7 +36,7 @@ class ExerciseLogController {
     const { id } = req.params;
     const { date, duration, exercise, sets, reps, type } = req.body;
 
-    const log = await db.findOne({ _id: id });
+    const log = await db.findOne({ _id: new ObjectId(id) });
     if (!log) {
       return res.status(404).json({ message: 'Log not found' });
     }
@@ -48,7 +47,9 @@ class ExerciseLogController {
 
   static async delete(req, res) {
     const { id } = req.params;
-    const log = await db.findOne({ _id: id });
+    console.log(id)
+    const log = await db.findOne({ _id: new ObjectId(id) });
+    console.log(log)
     if (!log) {
       return res.status(404).json({ message: 'Log not found' });
     }
@@ -57,20 +58,12 @@ class ExerciseLogController {
   }
   static async getUserLogs(req, res) {
     const user = req.user;
-    console.log(user);
     const logs = await db.find({ 'user': user.name.id }).toArray();
     if (!logs) {
       return res.status(404).json({ message: 'No logs found for this user' });
     }
     return res.status(200).json({ data: logs });
   }
-  // static createUserLog(req, res) {
-  //   const { user } = req.params.id;
-  //   const { date, duration, exercise, sets, reps, type } = req.body;
-  //   const log = new ExerciseLog(date, duration, exercise, sets, reps, type, user);
-  //   db.insertOne(log);
-  //   return res.status(201).json({ message: 'Log added successfully', data: log });
-  // }
 }
 
 module.exports = ExerciseLogController;
